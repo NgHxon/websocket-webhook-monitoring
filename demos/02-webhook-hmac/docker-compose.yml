@@ -1,0 +1,20 @@
+# docker compose up --build   ->  xem log của sender và receiver xen kẽ nhau
+name: demo-02-webhook-hmac
+services:
+  receiver:
+    build: .
+    command: ["python", "receiver.py"]
+    environment:
+      WEBHOOK_SECRET: demo-secret
+      FAIL_FIRST_N: 2
+    ports:
+      - "4000:4000"
+
+  sender:
+    build: .
+    command: ["python", "sender.py"]
+    depends_on: [receiver]
+    environment:
+      TARGET_URL: http://receiver:4000/webhook
+      WEBHOOK_SECRET: demo-secret
+      START_DELAY_SEC: 1.5

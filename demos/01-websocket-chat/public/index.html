@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <title>Demo 01 — WebSocket Chat</title>
+  <style>
+    body { font: 15px system-ui, sans-serif; max-width: 640px; margin: 30px auto; padding: 0 16px; }
+    #log { border: 1px solid #ccc; border-radius: 8px; height: 380px; overflow: auto; padding: 10px; background: #fafafa; }
+    .sys { color: #888; font-style: italic; }
+    .me b { color: #1864ab; }
+    form { display: flex; gap: 8px; margin-top: 10px; }
+    input { flex: 1; padding: 8px; }
+    #status { font-size: 13px; }
+  </style>
+</head>
+<body>
+  <h2>💬 Demo WebSocket Chat</h2>
+  <p id="status">Đang kết nối…</p>
+  <div id="log"></div>
+  <form id="f"><input id="msg" placeholder="Nhập tin nhắn rồi Enter" autocomplete="off" /><button>Gửi</button></form>
+
+<script>
+  const name = prompt('Tên của bạn?') || 'Khách';
+  const log = document.getElementById('log');
+  const esc = (s) => String(s).replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+  const add = (html, cls = '') => { log.insertAdjacentHTML('beforeend', `<div class="${cls}">${html}</div>`); log.scrollTop = 1e9; };
+
+  const ws = new WebSocket(`ws://${location.host}/ws`);
+  ws.onopen = () => { document.getElementById('status').textContent = '🟢 Đã kết nối (full-duplex)'; ws.send(JSON.stringify({ type: 'join', name })); };
+  ws.onclose = () => document.getElementById('status').textContent = '🔴 Mất kết nối';
+  ws.onmessage = (e) => {
+    const m = JSON.parse(e.data);
+    if (m.type === 'system') add(`${esc(m.text)} — đang online: ${m.online}`, 'sys');
+    else add(`<b>${esc(m.from)}:</b> ${esc(m.text)}`, m.from === name ? 'me' : '');
+  };
+  document.getElementById('f').onsubmit = (e) => {
+    e.preventDefault();
+    const input = document.getElementById('msg');
+    if (input.value.trim()) ws.send(JSON.stringify({ type: 'chat', text: input.value }));
+    input.value = '';
+  };
+</script>
+</body>
+</html>

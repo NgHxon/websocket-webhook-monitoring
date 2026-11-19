@@ -1,0 +1,7 @@
+# docker compose up --build   ->  mở http://localhost:3000 ở 2 tab
+name: demo-01-websocket-chat
+services:
+  chat:
+    build: .
+    ports:
+      - "3000:3000"
