@@ -1,7 +1,7 @@
 # WebSocket & Webhook — Hệ thống giám sát đa kênh
 
 > Đề tài thực tập cơ sở: **Tìm hiểu WebSocket và Webhook, xây dựng hệ thống giám sát đa kênh.**
-> Người thực hiện: [Họ tên] — [MSSV] — [Lớp] · Giảng viên hướng dẫn: [Tên thầy]
+> Người thực hiện: Nguyễn Hải Sơn — 64132058 — 64.TTMMT · Giảng viên hướng dẫn: Lê Nam Tuấn
 
 Mục tiêu cuối: hệ thống thu thập CPU/RAM từ nhiều máy, hiển thị **realtime** qua **WebSocket**
 và tự động gửi cảnh báo tới **Discord / Slack / Telegram** qua **Webhook**.
@@ -29,7 +29,6 @@ và tự động gửi cảnh báo tới **Discord / Slack / Telegram** qua **We
 
 1. [docs/01-websocket.md](docs/01-websocket.md) → chạy [demos/01-websocket-chat](demos/01-websocket-chat)
 2. [docs/02-webhook.md](docs/02-webhook.md) → chạy [demos/02-webhook-hmac](demos/02-webhook-hmac)
-3. [docs/03-quy-uoc-thu-muc-va-dat-ten.md](docs/03-quy-uoc-thu-muc-va-dat-ten.md)
 
 ## ⚡ Chạy demo
 
